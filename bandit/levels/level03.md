@@ -4,12 +4,18 @@
 To open a hidden file in the home directory
 
 # STEPS
+First, we must enter the directory "inhere". We can dothis with the command `cd`:
 ```bash
-ls -la
+cd inhere
 ```
-We can find this hidden file by simply adding the option `-a` to the command `ls`.
+We are told that the file we're looking for is hidden in this directory. Therefore, we will not be able to find it with a simple `ls`
+We can find this hidden file by simply adding the option `-a` to the command `ls`:
 ```bash
-cat 
+ls -a
+```
+We learn the name of the hidden file, which we can `cat` as usual:
+```bash
+cat ./...Hidden-From-You
 ```
 There, you can obtain the password.
 
@@ -18,7 +24,12 @@ To understand how to use each command, we can always use `man` followed by said 
 ```bash
 man ls
 ```
-
+We could have searched for the hidden file and read it without accessing the directory "inhere" directly, by utilizing file paths:
+```bash
+ls -a inhere
+cat inhere/...Hidden-From-You
+```
+Additionally, by writing the `cat inhere/` and pressing Tab, the name of the hidden file autofills 
 
 # SUMMARY
 We have used `ls` and `man` to retrieve the password from a hidden file.
