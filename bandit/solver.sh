@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=5
+MAX_LEVEL=6
 PASSWORD="bandit0"
 if [ "$1" -gt "$MAX_LEVEL" ]; then
   SOLVE_UNTIL=$MAX_LEVEL
@@ -33,6 +33,11 @@ solve_level_4() {
 	cd inhere
 	FILE_PATH=$(file ./-file* | grep ASCII | tr ':' '\n' | head -n 1)
 	cat $FILE_PATH
+}
+
+solve_level_5() {
+	FILE_PATH=$(file "$(find -size 1033c -not -executable)" | grep ASCII | tr ':' '\n' | head -n 1)
+	cat $FILE_PATH | head -n 1
 }
 
 #MAIN FUNCTION
