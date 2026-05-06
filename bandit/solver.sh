@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=4
+MAX_LEVEL=5
 PASSWORD="bandit0"
 if [ "$1" -gt "$MAX_LEVEL" ]; then
   SOLVE_UNTIL=$MAX_LEVEL
@@ -29,6 +29,12 @@ solve_level_3() {
 	cat $FILE_PATH
 }
 
+solve_level_4() {
+	cd inhere
+	FILE_PATH=$(file ./-file* | grep ASCII | tr ':' '\n' | head -n 1)
+	cat $FILE_PATH
+}
+
 #MAIN FUNCTION
 for ((i=0; i<SOLVE_UNTIL; i++)); do
 	NEXT=$((i+1))
@@ -36,7 +42,7 @@ for ((i=0; i<SOLVE_UNTIL; i++)); do
 
 	echo "Level $i -> $NEXT"
 
-	PASSWORD=$(sshpass -p "$PASSWORD" ssh -p 2220 bandit$i@bandit.labs.overthewire.org "
+	PASSWORD=$(sshpass -p "$PASSWORD" ssh -p 2220 bandit$i@bandit.labs.overthewire.org " > /dev/null
 		$(declare -f $CMD)
 		$CMD	
 	")
