@@ -1,15 +1,15 @@
 # BANDIT Level 0 -> 1
 
 
-# GOAL
+## GOAL
 To log into the game with SSH and open a file in the home directory
 
 
-# CONTEXT
+## CONTEXT
 SSH (Secure Shell Protocol) is a network protocol used to securely connect to another computer over an unsecured network. It encrypts all communication between the client and the remote system, protecting data like passwords and commands from interception. In practice, SSH is commonly used by system administrators and developers to remotely manage servers, deploy applications, transfer files securely, and troubleshoot systems without needing physical access to the machine.
 
 
-# STEPS
+## STEPS
 
 ```bash
 ssh bandit0@bandit.labs.overthewire.org -p 2220
@@ -31,9 +31,9 @@ cat readme
 The file includes a short introduction from the team and the password to the next level.
 
 
-# EXTRA STEPS
+## EXTRA STEPS
 
-# 1
+### 1
 We could have also connected to SSH by adding the password automatically with `sshpass`. In the real world, this would be quite insecure and a bad practice but it is fun to know:
 
 ```bash
@@ -43,7 +43,7 @@ sshpass -p "bandit0" ssh bandit0@bandit.labs.overthewire.org -p 2220
 In real life, it is more common to generate a key, copy it into the server and connect without a password.
 
 
-# 2
+### 2
 It's an interesting challenge to get only the password from the text, so let's try.
 One way of doing this is with the `tail` and `awk`. THe former prints the last X lines of each file to stdout, the latter allows you to use the awk programming language.
 My first solution was:
@@ -73,5 +73,5 @@ cat readme | tr ' ' '\n' | grep -E '^[a-zA-Z0-9]{32}$'
 ```
 
 
-# SUMMARY
+## SUMMARY
 We have used basic SSH, `ls` and `cat` to retrieve a password from a file.

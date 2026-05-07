@@ -1,15 +1,15 @@
 # BANDIT Level 3 -> 4
 
 
-# GOAL
+## GOAL
 To open a hidden file in the home directory
 
 
-# CONTEXT
+## CONTEXT
 Hidden files are files whose names start with a dot, which keeps them out of normal directory listings. They're typically used to store configuration settings and preferences for programs, such as `.bashrc` or `.gitignore`, so they don't clutter everyday file views while still being easily accessible when needed.
 
 
-# STEPS
+## STEPS
 First, we must enter the directory "inhere". We can do this with the command `cd`:
 
 ```bash
@@ -32,7 +32,7 @@ cat ./...Hidden-From-You
 There, you can obtain the password.
 
 
-# EXTRA STEPS
+## EXTRA STEPS
 To understand how to use each command, we can always use `man` followed by said command to open its manual:
 
 ```bash
@@ -49,5 +49,5 @@ cat inhere/...Hidden-From-You
 Additionally, by writing the `cat inhere/` and pressing Tab, the name of the hidden file autofills 
 
 
-# SUMMARY
+## SUMMARY
 We have used `ls` and `man` to retrieve the password from a hidden file.

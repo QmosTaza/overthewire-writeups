@@ -1,14 +1,14 @@
 # BANDIT Level 2 -> 3
 
 
-# GOAL
+## GOAL
 To open a file in the home directory with spaces in its filename
 
 
-# CONTEXT
+## CONTEXT
 A filepath specifies the location of a file or directory within a filesystem. It can be absolute, starting from the root directory (something like `/home/user/file.txt`), or relative, based on the current working directory (like `docs/file.txt`). Filepaths are used in commands to tell the system exactly where to find or place files.
 
-# STEPS
+## STEPS
 ```bash
 ls -l
 ```
@@ -22,5 +22,5 @@ cat ~/"--spaces in this filename--"
 There, you can obtain the password.
 
 
-# SUMMARY
+## SUMMARY
 We have used `cat`, file paths and `"` to retrieve a password from a file.
