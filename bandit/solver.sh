@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=8
+MAX_LEVEL=10
 PASSWORD="bandit0"
 
 if [ "$1" -gt "$MAX_LEVEL" ]; then
@@ -15,6 +15,7 @@ PASSWORD_FILE=".bandit_passwords"
 
 touch "$PASSWORD_FILE"
 grep -qxF "bandit/.bandit_passwords" ../.gitignore 2>/dev/null || echo "bandit/.bandit_passwords" >> ../.gitignore
+grep -qxF "0:bandit0" "$PASSWORD_FILE" 2>/dev/null || echo "0:bandit0" >> "$PASSWORD_FILE"
 
 
 #HELPER FUNCTIONS
@@ -77,6 +78,14 @@ solve_level_6() {
 
 solve_level_7() {
 	grep "millionth" data.txt | awk '{print $2}'
+}
+
+solve_level_8() {
+	sort data.txt | uniq -u
+}
+
+solve_level_9() {
+	strings data.txt | grep "^===" | tr -d '= ' | tail -n 1
 }
 
 
