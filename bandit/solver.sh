@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=10
+MAX_LEVEL=12
 PASSWORD="bandit0"
 
 if [ "$1" -gt "$MAX_LEVEL" ]; then
@@ -88,6 +88,13 @@ solve_level_9() {
 	strings data.txt | grep "^===" | tr -d '= ' | tail -n 1
 }
 
+solve_level_10(){
+	base64 -d data.txt | tr ' ' '\n' | tail -n 1
+}
+
+solve_level_11(){
+	cat data.txt | tr '[a-zA-Z]' '[n-za-mN-ZA-M]' | tr ' ' '\n' | tail -n 1
+}
 
 #CACHE FUNCTION
 for ((i=$((SOLVE_UNTIL-1)); i > 0; i--)); do
