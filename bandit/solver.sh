@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=13
+MAX_LEVEL=14
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -133,6 +133,27 @@ solve_level_12(){
 	cat "$FILE_NAME" | tr ' ' '\n' | tail -n 1
 }
 
+solve_level_13(){
+	LVL13_PASSWORD=$(get_password 13)
+	LVL13_SSHKEY="./sshkey_lvl13.private"
+	
+	sshpass -p "$LVL13_PASSWORD" \
+	scp -P 2220 \
+		-o StrictHostKeyChecking=no \
+		-o LogLevel=ERROR \
+		bandit13@bandit.labs.overthewire.org:~/sshkey.private \
+		"$LVL13_SSHKEY"
+		
+	grep -qxF "bandit/sshkey_lvl13.private" ../.gitignore 2>/dev/null || echo "bandit/sshkey_lvl13.private" >> ../.gitignore
+	
+	chmod 600 "$LVL13_SSHKEY"
+
+	ssh -i "$LVL13_SSHKEY" \
+		-o StrictHostKeyChecking=no -o LogLevel=ERROR \
+		-p 2220 bandit14@bandit.labs.overthewire.org \
+		"cat /etc/bandit_pass/bandit14"
+}
+
 #CACHE FUNCTION
 for ((i=$((SOLVE_UNTIL-1)); i > 0; i--)); do
 	echo "Testing caché for level $i"
@@ -156,12 +177,16 @@ for ((i=$RESUME; i<SOLVE_UNTIL; i++)); do
 
 	echo "Level $i -> $NEXT"
 
-	PASSWORD=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -p 2220 \
-		bandit$i@bandit.labs.overthewire.org "
-		$(declare -f $CMD)
-		$CMD
-		" 2>/dev/null)
-	
+	if [ "$i" -eq 13 ]; then
+		PASSWORD=$($CMD)
+	else
+		PASSWORD=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -p 2220 \
+			bandit$i@bandit.labs.overthewire.org "
+			$(declare -f $CMD)
+			$CMD
+			" 2>/dev/null)
+	fi
+
 	save_password "$NEXT" "$PASSWORD"
 	echo "Password for level $NEXT: $PASSWORD"
 done
