@@ -53,6 +53,14 @@ echo **password goes here** | nc localhost 30000
 
 Note that this does not work with `telnet`.
 
+If you wanted to retrieve the password on its own, you could use environmental variables. These variables can be used to save the output of a given command and allow you to operate on it more easily. They are specially useful for scripting in bash:
+
+```bash
+RESPONSE=$(echo **password goes here** | nc localhost 30000) 
+#Do not add spaces between the '=' character
+echo "$RESPONSE" #To echo the response in question
+```
+
 ## ADDITIONAL CONTEXT
 
 ### 1
