@@ -6,7 +6,7 @@ To find the password which is stored in a file where all lowercase (a-z) and upp
 
 
 ## CONTEXT
-Caesar's cipher is one of the simplest encryption techniques, where each letter in a message is shifted a fixed number of places down or up the alphabet. For example, with a shift of 3, “A” becomes “D”, “B” becomes “E”, and so on, wrapping around at the end of the alphabet. It was used in ancient times by Julius Caesar for basic military communication, but it is very easy to break today because there are only 25 possible shifts, making it vulnerable to brute-force guessing.
+Caesar's cipher is one of the simplest encryption techniques, where each letter in a message is shifted a fixed number of places down or up the alphabet. For example, with a shift of 3, “A” becomes “D”, “B” becomes “E”, and so on, wrapping around at the end of the alphabet. It was used in ancient times by Julius Caesar for basic military communication, but it is very easy to break today because there are only 25 possible shifts, making it vulnerable to brute-force guessing. ROT13 is a variant of this cipher.
 
 
 ## STEPS

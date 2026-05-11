@@ -1,9 +1,17 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=12
+MAX_LEVEL=13
 PASSWORD="bandit0"
 
+if ! [[ "$1" =~ ^[0-9]+$ ]]; then
+	echo "Error: argument must be a number"
+	exit 1
+fi
+if [ "$1" -lt 1 ]; then
+	echo "Error: level must be >= 1"
+	exit 1
+fi
 if [ "$1" -gt "$MAX_LEVEL" ]; then
   SOLVE_UNTIL=$MAX_LEVEL
 else
@@ -94,6 +102,35 @@ solve_level_10(){
 
 solve_level_11(){
 	cat data.txt | tr '[a-zA-Z]' '[n-za-mN-ZA-M]' | tr ' ' '\n' | tail -n 1
+}
+
+solve_level_12(){
+	TEMP_DIR=$(mktemp -d)
+	cd "$TEMP_DIR"
+	cp ~/data.txt ./hex.txt
+	xxd -r hex.txt > data.txt
+	rm hex.txt
+	FILE_NAME="data.txt"
+
+	while true; do
+		FILE_OUTPUT=$(file * | tr ' ' '\n' | head -n 2 | grep -v "$FILE_NAME")
+		
+		if [[ "$FILE_OUTPUT" == *gzip* ]]; then
+			mv "$FILE_NAME" "$FILE_NAME.gz"
+			gzip -d "$FILE_NAME.gz"
+		elif [[ "$FILE_OUTPUT" == *bzip2* ]]; then
+			bzip2 -d "$FILE_NAME"
+			FILE_NAME="$FILE_NAME.out"
+		elif [[ "$FILE_OUTPUT" == *POSIX* ]]; then
+			tar -xf "$FILE_NAME"
+			rm "$FILE_NAME"
+			FILE_NAME=$(find . -maxdepth 1 -type f | head -n 1)
+			FILE_NAME="${FILE_NAME#./}"
+		else
+			break
+		fi
+	done
+	cat "$FILE_NAME" | tr ' ' '\n' | tail -n 1
 }
 
 #CACHE FUNCTION

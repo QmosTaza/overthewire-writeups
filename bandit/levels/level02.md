@@ -22,5 +22,15 @@ cat ~/"--spaces in this filename--"
 There, you can obtain the password.
 
 
+## EXTRA STEPS
+ALternatively, you may use write the beginning of the file path ("cat ~/--sp") and press `Tab` so it autocompletes. This will give you the following alternative solution:
+
+```bash
+cat ~/--spaces\ in\ this\ filename--
+```
+
+In this solution, instead of quotation marks, we use the backlash `\`, which escapes spaces and other special characters, so Bash treats them as ordinary characters.
+
+
 ## SUMMARY
 We have used `cat`, file paths and `"` to retrieve a password from a file.

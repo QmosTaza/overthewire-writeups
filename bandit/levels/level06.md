@@ -29,5 +29,13 @@ cat /var/lib/dpkg/info/bandit7.password
 ```
 
 
+## ADDITIONAL CONTEXT
+In Bash, redirection operators are used to control where input and output go:
+* `>` redirects output to a file and overwrites it
+* `>>` appends output to the end of a file without deleting existing content. 
+* `<` takes input from a file instead of the keyboard
+* `<<` starts a "here-document", allowing multiline input to be passed directly into a command until a chosen delimiter is reached.
+
+
 ## SUMMARY
 We have used `find` to retrieve the password from a series of given characteristics by searching through the server and filtering through error messages.
