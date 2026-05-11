@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=15
+MAX_LEVEL=16
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -163,6 +163,15 @@ solve_level_14(){
 	echo "$RESPONSE" | tail -n 1
 }
 
+solve_level_15(){
+	LVL15_PASSWORD=$(get_password 15)
+	RESPONSE=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -p 2220 \
+			bandit$i@bandit.labs.overthewire.org "
+			printf '%s\n' '$LVL15_PASSWORD' | openssl s_client -quiet -connect localhost:30001 -servername localhost 2>/dev/null
+			")
+	echo "$RESPONSE" | tr ' ' '\n' | tail -n 1
+}
+
 #CACHE FUNCTION
 for ((i=$((SOLVE_UNTIL-1)); i > 0; i--)); do
 	echo "Testing caché for level $i"
@@ -186,7 +195,7 @@ for ((i=$RESUME; i<SOLVE_UNTIL; i++)); do
 
 	echo "Level $i -> $NEXT"
 
-	if [[ "$i" -eq 13 || "$i" -eq 14 ]]; then
+	if [[ "$i" -eq 13 || "$i" -eq 14 || "$i" -eq 15 ]]; then
 		PASSWORD=$($CMD)
 	else
 		PASSWORD=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -p 2220 \
