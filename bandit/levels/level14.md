@@ -69,6 +69,9 @@ In practice, telnet was historically used for remote administration of systems, 
 However, it is still useful today for simple testing tasks, such as checking whether a service is listening on a port (for example, verifying if a web server or mail server is reachable on a specific endpoint).
 
 ### 2
+Netcat (invoked as `netcat` or `nc`) is a simple but powerful command-line tool used to read from and write to network connections using TCP or UDP. It acts like a "network pipe", allowing you to connect to a specific IP address and port, send data, and receive responses directly in the terminal. Because of this, it's commonly used for debugging network services, testing whether ports are open, and interacting with simple server-based challenges, similarly to telnet.
+
+In practice, nc is often preferred over tools like telnet for scripting because it is more flexible and easier to automate. You can pipe input into it, capture output, and integrate it into Bash scripts, making it very useful in environments like CTFs or wargames such as this one, where you need to send a password to a service and read back a response.
 
 ## SUMMARY
 We have used `telnet` or `nc` to send and receive messages from a port in localhost, which let us listen to the password.
