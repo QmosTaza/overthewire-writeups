@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=14
+MAX_LEVEL=15
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -143,7 +143,7 @@ solve_level_13(){
 		-o LogLevel=ERROR \
 		bandit13@bandit.labs.overthewire.org:~/sshkey.private \
 		"$LVL13_SSHKEY"
-		
+
 	grep -qxF "bandit/sshkey_lvl13.private" ../.gitignore 2>/dev/null || echo "bandit/sshkey_lvl13.private" >> ../.gitignore
 	
 	chmod 600 "$LVL13_SSHKEY"
@@ -152,6 +152,15 @@ solve_level_13(){
 		-o StrictHostKeyChecking=no -o LogLevel=ERROR \
 		-p 2220 bandit14@bandit.labs.overthewire.org \
 		"cat /etc/bandit_pass/bandit14"
+}
+
+solve_level_14(){
+	LVL14_PASSWORD=$(get_password 14)
+	RESPONSE=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -p 2220 \
+			bandit$i@bandit.labs.overthewire.org "
+			echo "$LVL14_PASSWORD" | nc localhost 30000
+			" 2>/dev/null)
+	echo "$RESPONSE" | tail -n 1
 }
 
 #CACHE FUNCTION
@@ -177,7 +186,7 @@ for ((i=$RESUME; i<SOLVE_UNTIL; i++)); do
 
 	echo "Level $i -> $NEXT"
 
-	if [ "$i" -eq 13 ]; then
+	if [[ "$i" -eq 13 || "$i" -eq 14 ]]; then
 		PASSWORD=$($CMD)
 	else
 		PASSWORD=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -p 2220 \
