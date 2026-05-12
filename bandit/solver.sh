@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=18
+MAX_LEVEL=19
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -196,6 +196,10 @@ retrieve_pw_16(){
 
 solve_level_17(){
 	diff passwords.old passwords.new | grep '>' | awk '{print $NF}'
+}
+
+solve_level_18(){
+	cat readme
 }
 
 #CACHE FUNCTION
