@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=19
+MAX_LEVEL=20
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -200,6 +200,11 @@ solve_level_17(){
 
 solve_level_18(){
 	cat readme
+}
+
+solve_level_19(){
+	FILE_PATH=$(ls)
+	./"$FILE_PATH" cat /etc/bandit_pass/bandit20
 }
 
 #CACHE FUNCTION
