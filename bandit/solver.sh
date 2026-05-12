@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=16
+MAX_LEVEL=18
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -19,10 +19,9 @@ else
 fi
 RESUME=$((SOLVE_UNTIL-1))
 
-PASSWORD_FILE=".bandit_passwords"
+PASSWORD_FILE="bandit_passwords"
 
 touch "$PASSWORD_FILE"
-grep -qxF "bandit/.bandit_passwords" ../.gitignore 2>/dev/null || echo "bandit/.bandit_passwords" >> ../.gitignore
 grep -qxF "0:bandit0" "$PASSWORD_FILE" 2>/dev/null || echo "0:bandit0" >> "$PASSWORD_FILE"
 
 
@@ -144,8 +143,6 @@ solve_level_13(){
 		bandit13@bandit.labs.overthewire.org:~/sshkey.private \
 		"$LVL13_SSHKEY"
 
-	grep -qxF "bandit/sshkey_lvl13.private" ../.gitignore 2>/dev/null || echo "bandit/sshkey_lvl13.private" >> ../.gitignore
-	
 	chmod 600 "$LVL13_SSHKEY"
 
 	ssh -i "$LVL13_SSHKEY" \
@@ -170,6 +167,35 @@ solve_level_15(){
 			printf '%s\n' '$LVL15_PASSWORD' | openssl s_client -quiet -connect localhost:30001 -servername localhost 2>/dev/null
 			")
 	echo "$RESPONSE" | tr ' ' '\n' | tail -n 1
+}
+
+solve_level_16(){
+	LVL16_PASSWORD=$(get_password 16)
+	LVL17_SSHKEY="./sshkey_lvl17.private"
+	touch "$LVL17_SSHKEY"
+	RESPONSE=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -p 2220 \
+			bandit$i@bandit.labs.overthewire.org "
+			for p in \$(nmap localhost -p 31000-32000 | tr '/tcp' '\n'| grep -E '^[0-9]{5}$'); do 
+				printf '%s\n' "$LVL16_PASSWORD" | 
+				openssl s_client -quiet -connect localhost:\$p -servername localhost 2>/dev/null 
+			done
+			")
+	printf '%s\n' "$RESPONSE" | awk '
+	/BEGIN RSA PRIVATE KEY/,/END RSA PRIVATE KEY/ {print}
+	' > "$LVL17_SSHKEY"
+	chmod 600 "$LVL17_SSHKEY"
+}
+
+retrieve_pw_16(){
+	LVL17_SSHKEY="./sshkey_lvl17.private"
+	ssh -i "$LVL17_SSHKEY" \
+		-o StrictHostKeyChecking=no -o LogLevel=ERROR \
+		-p 2220 bandit17@bandit.labs.overthewire.org \
+		"cat /etc/bandit_pass/bandit17"
+}
+
+solve_level_17(){
+	diff passwords.old passwords.new | grep '>' | awk '{print $NF}'
 }
 
 #CACHE FUNCTION
@@ -197,6 +223,9 @@ for ((i=$RESUME; i<SOLVE_UNTIL; i++)); do
 
 	if [[ "$i" -eq 13 || "$i" -eq 14 || "$i" -eq 15 ]]; then
 		PASSWORD=$($CMD)
+	elif [[ "$i" -eq 16 ]]; then
+		$CMD
+		PASSWORD=$(retrieve_pw_16)
 	else
 		PASSWORD=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -p 2220 \
 			bandit$i@bandit.labs.overthewire.org "

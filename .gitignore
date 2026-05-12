@@ -1,2 +1,3 @@
-bandit/.bandit_passwords
-bandit/sshkey_lvl13.private
+**passwords
+**private
+bandit/bandit_passwords
