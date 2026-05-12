@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=20
+MAX_LEVEL=21
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -210,11 +210,14 @@ solve_level_19(){
 #WIP
 solve_level_20(){
 	LVL20_PASSWORD=$(get_password 20)
-	FILE_PATH=$(ls)
-	echo "$LVL20_PASSWORD" | nc -l -p 12345 &
-	LISTENER_PID=$!
-	./"$FILE_PATH" 12345
-	kill "$LISTENER_PID" 2>/dev/null
+	RESPONSE=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -p 2220 \
+			bandit$i@bandit.labs.overthewire.org "
+			echo "$LVL20_PASSWORD" | nc -l -p 12345 &
+			LISTENER_PID=\$!
+			./\$(ls) 12345
+			kill "\$LISTENER_PID" 2>/dev/null
+			")
+	echo $RESPONSE | awk '{print $1}'
 }
 
 #CACHE FUNCTION
@@ -240,7 +243,7 @@ for ((i=$RESUME; i<SOLVE_UNTIL; i++)); do
 
 	echo "Level $i -> $NEXT"
 
-	if [[ "$i" -eq 13 || "$i" -eq 14 || "$i" -eq 15 ]]; then
+	if [[ "$i" -eq 13 || "$i" -eq 14 || "$i" -eq 15 || "$i" -eq 20 ]]; then
 		PASSWORD=$($CMD)
 	elif [[ "$i" -eq 16 ]]; then
 		$CMD
