@@ -207,6 +207,16 @@ solve_level_19(){
 	./"$FILE_PATH" cat /etc/bandit_pass/bandit20
 }
 
+#WIP
+solve_level_20(){
+	LVL20_PASSWORD=$(get_password 20)
+	FILE_PATH=$(ls)
+	echo "$LVL20_PASSWORD" | nc -l -p 12345 &
+	LISTENER_PID=$!
+	./"$FILE_PATH" 12345
+	kill "$LISTENER_PID" 2>/dev/null
+}
+
 #CACHE FUNCTION
 for ((i=$((SOLVE_UNTIL-1)); i > 0; i--)); do
 	echo "Testing caché for level $i"
