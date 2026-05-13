@@ -90,6 +90,8 @@ chmod 777 script.sh
 #then we cp and mv the script to where it needs to be
 ```
 
+Note that you could just not create the password file and change its permissions in the script, or have the script create it.
+
 In a minute's time, you should be able to read the password by simply reading the password file:
 
 ```bash

