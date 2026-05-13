@@ -13,6 +13,7 @@ MD5 is commonly used to verify file integrity, although it is no longer consider
 
 ## STEPS
 The start of this level is basically the same as the previous one, so we will skim through the first commands...
+
 ```bash
 cd /etc/cron.d/
 ls -l
