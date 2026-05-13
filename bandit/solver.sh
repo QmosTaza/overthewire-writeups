@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=21
+MAX_LEVEL=22
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -207,7 +207,6 @@ solve_level_19(){
 	./"$FILE_PATH" cat /etc/bandit_pass/bandit20
 }
 
-#WIP
 solve_level_20(){
 	LVL20_PASSWORD=$(get_password 20)
 	RESPONSE=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -p 2220 \
@@ -218,6 +217,12 @@ solve_level_20(){
 			kill "\$LISTENER_PID" 2>/dev/null
 			")
 	echo $RESPONSE | awk '{print $1}'
+}
+
+solve_level_21(){
+	SCRIPT=$(cat /etc/cron.d/cronjob_bandit22 | tr ' ' '\n' | tail -n 3 | head -n 1)
+	TMP_FILE=$(cat "$SCRIPT" | tr ' ' '\n' | tail -n 1)
+	cat "$TMP_FILE"
 }
 
 #CACHE FUNCTION
