@@ -2,7 +2,7 @@
 
 
 ## GOAL
-To find the next password by analysing a running cron job.
+To find the next password by analysing a running cronjob.
 
 
 ## ADDITIONAL CONTEXT

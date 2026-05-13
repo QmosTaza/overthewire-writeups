@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=22
+MAX_LEVEL=23
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -223,6 +223,11 @@ solve_level_21(){
 	SCRIPT=$(cat /etc/cron.d/cronjob_bandit22 | tr ' ' '\n' | tail -n 3 | head -n 1)
 	TMP_FILE=$(cat "$SCRIPT" | tr ' ' '\n' | tail -n 1)
 	cat "$TMP_FILE"
+}
+
+solve_level_22(){
+	TMP_FILE=$(echo I am user bandit23 | md5sum  | cut -d ' ' -f 1)
+	cat "/tmp/$TMP_FILE"
 }
 
 #CACHE FUNCTION
