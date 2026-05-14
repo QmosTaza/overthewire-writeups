@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=24
+MAX_LEVEL=25
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -251,6 +251,20 @@ solve_level_23(){
 	done
 
 	cat password
+}
+
+solve_level_24(){
+	TEMP_DIR=$(mktemp -d)
+	cd "$TEMP_DIR"
+
+	touch password
+	chmod 777 password
+
+	for i in {0000..9999}; do
+			echo "gb8KRRCsshuZXI0tUuR6ypOFjiZbf3G8 $i"
+	done | nc localhost 30002 | grep -v "Wrong"  > $TEMP_DIR/password
+
+	cat /tmp/tmp.unTFXHZoLQ/password | tr ' ' '\n' | grep -E '^[A-Za-z0-9]{32}$'
 }
 
 #CACHE FUNCTION
