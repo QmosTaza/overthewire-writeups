@@ -5,7 +5,7 @@
 To find the next password by analysing a running cronjob.
 
 
-## ADDITIONAL CONTEXT
+## CONTEXT
 MD5 is a hashing algorithm that converts any input (a file, a string, or any sequence of bytes) into a fixed 128-bit value, usually displayed as a 32-character hexadecimal string. The same input always produces the same hash, while even a tiny change in the input produces a completely different result. 
 
 MD5 is commonly used to verify file integrity, although it is no longer considered secure for cryptographic purposes because collisions can be generated. By comparing hashes, we can check whether two files are identical or whether a file has been altered.

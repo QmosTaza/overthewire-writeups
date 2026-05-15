@@ -5,7 +5,7 @@
 To find the next password by analysing a running cronjob and writing our own shell script.
 
 
-## ADDITIONAL CONTEXT
+## CONTEXT
 Shell scripts are plain text files containing a sequence of commands that are executed automatically by a shell such as GNU Bash or Z shell (ZSH). They allow you to automate repetitive tasks by combining commands, variables, loops, and conditional statements into a reusable program. A script usually begins with a shebang such as `#!/bin/bash`, which tells the operating system to run the file with Bash. 
 
 Shell scripts are widely used for system administration, file processing, and solving command-line tasks efficiently without having to type each command manually.
@@ -63,7 +63,7 @@ cp script.sh script_save.sh
 mv script.sh /var/spool/bandit24/foo
 ```
 
-Please make sure you have tried to solve this level yourself before you continue reading.
+Please make sure you have tried to solve this level yourself before you continue reading. While this is true for any level, this one may be particularly educational for you.
 
 
 -----------------------------------------------

@@ -5,7 +5,7 @@
 To find the next password by analysing a running cronjob.
 
 
-## ADDITIONAL CONTEXT
+## CONTEXT
 Cron is a job scheduler in Unix-like systems that automatically runs commands or scripts at specified times or intervals. Scheduled tasks are defined in files called 'crontabs', where each entry indicates when a command should be executed (for example, every minute, every day, or every Sunday at midnight).
 
 Cron is commonly used for maintenance tasks such as backups, log rotation, and automated scripts, allowing programs to run in the background without manual intervention.

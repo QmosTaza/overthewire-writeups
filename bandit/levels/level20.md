@@ -5,7 +5,7 @@
 To find the next password by running a file with setuid.
 
 
-## ADDITIONAL CONTEXT
+## CONTEXT
 In a basic client-server connection, one program (the server) listens on a specific port and waits for incoming connections, while another program (the client) connects to that port to exchange data. The server acts like a receptionist waiting at a numbered door, and the client chooses the correct door number (the port) to reach the desired service. Once the connection is established, both sides can send and receive information until one of them closes the connection.
 
 

@@ -20,7 +20,7 @@ By skimming through the manual, we can easily figure out that to scan specific p
 nmap -p 31000-32000 localhost
 ```
 
-With this list of open ports, we could trial and error each port with the command we saw in the previous level. With a small number of ports we can reasonably do this, however, it is more interesting to try to automate this process instead of doing it by hand.
+With this list of open ports, we could use trial and error and connect to each port with the command we saw in the previous level. Since there is a small number of ports, we can reasonably do this. However, it seems more interesting in the long run to try to automate this process instead of doing it all by hand.
 
 To automate it, we will first save the list of ports, retrieving only the port numbers with the methods we have been seeing in this writeup.
 
