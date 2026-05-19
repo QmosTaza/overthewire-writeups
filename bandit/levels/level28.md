@@ -31,7 +31,7 @@ git log
 The commit history shows that an "info leak" has been patched in the last commit. We are interested in knowing exactly what has been changed, which we can do with the command `diff`:
 
 ```bash
-git diff <new log> <old log>
+git diff <old log> <new log>
 ```
 
 We learn that the inital 'README.md' file used to contain the real, uncensored password to bandit29. We can copy said password from the output and connect to the next level.
