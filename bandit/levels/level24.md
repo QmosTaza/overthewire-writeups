@@ -1,4 +1,4 @@
-# BANDIT Level 22 -> 23
+# BANDIT Level 24 -> 25
 
 
 ## GOAL
