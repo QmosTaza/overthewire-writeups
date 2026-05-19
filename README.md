@@ -22,7 +22,9 @@ Example:
 ./solver.sh 5
 ```
 
-This will output the password required to access level 5.
+This will output the password required to access level 5. 
+
+Read the specific `README.md` files for more information on the use of these solvers.
 
 ## Purpose
 

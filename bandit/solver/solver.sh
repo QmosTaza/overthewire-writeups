@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=25
+MAX_LEVEL=27
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -267,6 +267,20 @@ solve_level_24(){
 	cat /tmp/tmp.unTFXHZoLQ/password | tr ' ' '\n' | grep -E '^[A-Za-z0-9]{32}$'
 }
 
+retrieve_key_26(){
+	LVL25_PASSWORD=$(get_password 25)
+	LVL26_SSHKEY="./sshkey_lvl26.private"
+	
+	sshpass -p "$LVL25_PASSWORD" \
+	scp -P 2220 \
+		-o StrictHostKeyChecking=no \
+		-o LogLevel=ERROR \
+		bandit25@bandit.labs.overthewire.org:~/bandit26.sshkey \
+		"$LVL26_SSHKEY"
+
+	chmod 600 "$LVL26_SSHKEY"
+}
+
 #CACHE FUNCTION
 for ((i=$((SOLVE_UNTIL-1)); i > 0; i--)); do
 	echo "Testing caché for level $i"
@@ -295,6 +309,12 @@ for ((i=$RESUME; i<SOLVE_UNTIL; i++)); do
 	elif [[ "$i" -eq 16 ]]; then
 		$CMD
 		PASSWORD=$(retrieve_pw_16)
+	elif [[ "$i" -eq 25 || "$i" -eq 26 ]]; then
+		SOLVER="solver_$i.py"
+		if [[ ! -f "sshkey_lvl26.private" ]]; then
+			retrieve_key_26
+		fi
+		PASSWORD=$(python3 $SOLVER)
 	else
 		PASSWORD=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -p 2220 \
 			bandit$i@bandit.labs.overthewire.org "

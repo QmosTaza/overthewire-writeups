@@ -54,7 +54,7 @@ I recommend that you make a temporary directory, write the script there, then mo
 
 ```bash
 mktemp -d
-cd **to the path you just created**
+cd </tmp path>
 touch script.sh #creates a file if it does not exist already
 nano script.sh #lets you edit said file 
 # To save your changes to the file, press Ctrl + S 
@@ -73,7 +73,7 @@ What we want to do, is have `bandit24` read its password in the `/etc/bandit_pas
 
 ```bash
 #!/bin/bash
-cat /etc/bandit_pass/bandit24 > /tmp/**tmp directory name here**/password
+cat /etc/bandit_pass/bandit24 > /tmp/<path>/password
 ```
 
 Then, we must change the permissions so that bandit24 can write into our temporary directory. This includes changing the permissions for the script, the password file and our temporary directory:
@@ -82,8 +82,8 @@ Then, we must change the permissions so that bandit24 can write into our tempora
 touch password
 chmod 666 password
 
-ls -ld **temporary directory path**
-chmod 777 **temporary directory path**
+ls -ld </tmp path>
+chmod 777 </tmp path>
 
 chmod 777 script.sh
 

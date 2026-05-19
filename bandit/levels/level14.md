@@ -28,7 +28,7 @@ telnet localhost 30000
 Then, we simply need to paste the password onto the terminal, press `Enter`, then escape the connection by typing the given 'escape character' `^]`:
 
 ```bash
-**password goes here**
+<password>
 ^]
 ```
 
@@ -48,7 +48,7 @@ nc localhost 30000
 We could do it in one line by using the `echo` command, which prints text you give it as an argument to standard output:
 
 ```bash
-echo **password goes here** | nc localhost 30000
+echo <password> | nc localhost 30000
 ```
 
 Note that this does not work with `telnet`.
@@ -56,7 +56,7 @@ Note that this does not work with `telnet`.
 If you wanted to retrieve the password on its own, you could use environmental variables. These variables can be used to save the output of a given command and allow you to operate on it more easily. They are specially useful for scripting in bash:
 
 ```bash
-RESPONSE=$(echo **password goes here** | nc localhost 30000) 
+RESPONSE=$(echo <password> | nc localhost 30000) 
 #Do not add spaces between the '=' character
 echo "$RESPONSE" #To echo the response in question
 ```
