@@ -55,7 +55,7 @@ To exit, we can do the following:
 ```bash
 exit #in Bash
 :qa! #in Vim
-#and advance the page to exit the level
+#Then, click the down arrow to advance the page and exit the level
 ```
 
 ## SUMMARY
