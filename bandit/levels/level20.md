@@ -31,7 +31,7 @@ Nevertheless, if we just do this, we are stuck connected to the port and we cann
 If you choose the second option, you must use the special character `&` with the command you wish to push to the background. In our case, it will look like this:
 
 ```bash
-echo **pasword goes here** | nc -l -p 12345 &
+echo <password> | nc -l -p 12345 &
 LISTENER_PID=$!
 ./"$FILE_PATH" 12345
 kill "$LISTENER_PID" 2>/dev/null

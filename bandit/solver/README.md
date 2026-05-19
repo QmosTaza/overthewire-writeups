@@ -24,10 +24,10 @@ pip install -r requirements.txt
 
 ## Project Structure
 
-- `solver.sh` → main orchestrator for all levels  
-- `solver_25.py`, `solver_26.py` → interactive solvers (pexpect-based)  
-- `bandit_passwords` → generated cache of discovered passwords  
-- `sshkey_lvl*.private` → generated SSH keys used in some levels  
+- `solver.sh`: Main orchestrator for all levels  
+- `solver_*.py`: Interactive solver used for some levels.  
+- `bandit_passwords`: Generated cache of discovered passwords  
+- `sshkey_lvl*.private`: Generated SSH keys used in some levels  
 
 Note:  
 `bandit_passwords` and `sshkey_lvl*.private` are generated at runtime and ignored by git.
@@ -36,7 +36,7 @@ Note:
 
 ## Usage
 
-A helper script is included to streamline progression for each game:
+Run the helper script with the level you wish to connect to, and it will output the password required to access that level.
 
 ```bash
 ./solver.sh <level>
