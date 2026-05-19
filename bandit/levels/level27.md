@@ -32,5 +32,10 @@ git clone ssh://bandit27-git@bandit.labs.overthewire.org:2220/home/bandit27-git/
 
 After, a new folder called "repo" should appear in our local machine. We can simply enter said folder and read the 'README' file to obtain the password.
 
+```bash
+cd repo
+cat README
+```
+
 ## SUMMARY
 We have learnt how use `clone` in Git to retrieve the password.

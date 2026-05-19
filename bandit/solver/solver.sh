@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=28
+MAX_LEVEL=29
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -299,6 +299,26 @@ solve_level_27(){
 	fi
 	cd lvl27
 	cat README | awk '{print $NF}'
+	)
+}
+
+solve_level_28(){
+	(
+	LVL28_PASSWORD=$(get_password 28)
+	REPO_PATH="git_repos_private"
+	if [[ ! -d "$REPO_PATH" ]]; then
+			mkdir "$REPO_PATH"
+	fi
+	cd "$REPO_PATH"
+	if [[ ! -d "lvl28" ]]; then
+		GIT_SSH_COMMAND="sshpass -p '$LVL28_PASSWORD' ssh -o StrictHostKeyChecking=no -p 2220" \
+		git clone ssh://bandit28-git@bandit.labs.overthewire.org/home/bandit28-git/repo
+		mv repo/ lvl28/
+	fi
+	cd lvl28/.git
+	NEW=$(git log | head -n 1 | awk '{print $2}')
+	PREV=$(git log | head -n 7 | tail -n 1 | awk '{print $2}')
+	git diff "$NEW" "$PREV" | tail -n 2 | cut -d ' ' -f 3
 	)
 }
 
