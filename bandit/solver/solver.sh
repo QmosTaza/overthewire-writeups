@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=27
+MAX_LEVEL=28
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -42,6 +42,9 @@ remove_password() {
 }
 
 test_password() {
+	if [[ "$1" -eq 26 ]]; then
+        return 1
+    fi
 	sshpass -p "$2" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 -p 2220 \
 		bandit"$1"@bandit.labs.overthewire.org "echo ok" 2>/dev/null | grep -q ok
 }
@@ -281,6 +284,24 @@ retrieve_key_26(){
 	chmod 600 "$LVL26_SSHKEY"
 }
 
+solve_level_27(){
+	(
+	LVL27_PASSWORD=$(get_password 27)
+	REPO_PATH="git_repos_private"
+	if [[ ! -d "$REPO_PATH" ]]; then
+			mkdir "$REPO_PATH"
+	fi
+	cd "$REPO_PATH"
+	if [[ ! -d "lvl27" ]]; then
+		GIT_SSH_COMMAND="sshpass -p '$LVL27_PASSWORD' ssh -o StrictHostKeyChecking=no -p 2220" \
+		git clone ssh://bandit27-git@bandit.labs.overthewire.org/home/bandit27-git/repo
+		mv repo/ lvl27/
+	fi
+	cd lvl27
+	cat README | awk '{print $NF}'
+	)
+}
+
 #CACHE FUNCTION
 for ((i=$((SOLVE_UNTIL-1)); i > 0; i--)); do
 	echo "Testing caché for level $i"
@@ -304,7 +325,7 @@ for ((i=$RESUME; i<SOLVE_UNTIL; i++)); do
 
 	echo "Level $i -> $NEXT"
 
-	if [[ "$i" -eq 13 || "$i" -eq 14 || "$i" -eq 15 || "$i" -eq 20 ]]; then
+	if [[ "$i" -eq 13 || "$i" -eq 14 || "$i" -eq 15 || "$i" -eq 20 || ("$i" -ge 27 && "$i" -le 31) ]]; then
 		PASSWORD=$($CMD)
 	elif [[ "$i" -eq 16 ]]; then
 		$CMD
