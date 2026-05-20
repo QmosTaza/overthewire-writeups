@@ -3,7 +3,7 @@ import re
 import requests
 
 PASSWORD_FILE = "natas_passwords"
-MAX_LEVEL = 1
+MAX_LEVEL = 2
 
 
 # INIT PASSWORD FILE
@@ -57,62 +57,65 @@ def request(level, password, path=""):
     url = f"http://natas{level}.natas.labs.overthewire.org{path}"
     return requests.get(url, auth=(f"natas{level}", password))
 
-
-def extract_password(text):
-    match = re.search(r"[A-Za-z0-9]{32}", text)
-    return match.group(0) if match else None
-
-
-
 # LEVEL SOLVERS
 def solve_level_0(pw):
-    r = request(0, pw, "/")
-    return extract_password(r.text)
+    path = LEVELS[0]["path"]
+    r = request(0, pw, path)
+    match = re.search(r"[A-Za-z0-9]{32}", r.text)
+    return match.group(0) if match else None
 
-SOLVERS = {
-    0: solve_level_0,
+def solve_level_1(pw):
+    path = LEVELS[1]["path"]
+    r = request(1, pw, path)
+    match = re.findall(r"[A-Za-z0-9]{32}", r.text)
+    return match[-1] if match else None
+
+LEVELS = {
+    0: {
+        "solver": solve_level_0,
+        "path": "/"
+    },
+    1: {
+        "solver": solve_level_1,
+        "path": "/"
+    }
 }
 
 
 # CACHE VALIDATION
-def test_password(level, pw):
+def test_password(level, pw, path):
     try:
-        r = request(level, pw)
+        r = request(level, pw, path)
         return r.status_code == 200
     except:
         return False
 
 
-# ----------------------------
-# MAIN LOOP (equivalent to your Bash orchestrator)
-# ----------------------------
-
+# MAIN LOOP
 def main(target_level=1):
     password = "natas0"
+    resume = target_level-1
 
     # resume from cache
     for i in range(target_level - 1, 0, -1):
         print(f"Testing cache for level {i}")
         cached = get_password(i)
-        if cached and test_password(i, cached):
+        path = LEVELS[i]["path"]
+        if cached and test_password(i, cached, path):
             password = cached
             print(f"Found valid password for level {i}")
             break
         else:
             remove_password(i)
+            resume -= 1
 
     # main solve loop
-    for i in range(target_level):
+    for i in range(resume, target_level, +1):
         next_level = i + 1
+        solver = LEVELS[i]["solver"]
+        
         print(f"Level {i} -> {next_level}")
-
-        solver = SOLVERS.get(i)
-
-        if not solver:
-            r = request(i, password)
-            password = extract_password(r.text)
-        else:
-            password = solver(password)
+        password = solver(password)
 
         save_password(next_level, password)
         print(f"Password for level {next_level}: {password}")

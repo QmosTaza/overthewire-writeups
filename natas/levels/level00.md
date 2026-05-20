@@ -17,7 +17,7 @@ This gives access to the page's HTML, CSS, JavaScript, network requests, cookies
 
 ## STEPS
 
-To open the website we need to complete this level, we can open any webbrowser of our choice and type the following URL on the search bar:
+To open the website we need to complete this level, we can open any web browser of our choice and type the following URL on the search bar:
 
 http://natas0.natas.labs.overthewire.org
 
@@ -25,9 +25,9 @@ We will be asked to enter the username and password for this level, in this case
 
 From here, we are not given too much information other than the password being "on this page". As you can probably imagine from reading the 'CONTEXT' section, you will have to open "Inspect Element" mode to retrieve the password.
 
-Press `Ctrl + Shift + C`  
+Press `Ctrl + Shift + C`
 or  
-Right-click the page and select **Inspect Element**
+Right-click the page and select **View source code** or **Inspect Element**
 
 When you open "Inspect Element", you will be first greeted with the "Inspection" tab, which shows the HTML document as the browser interprets it. This lets you view and modify the structure of the page in real time (note that only you can see what you modify).
 
@@ -35,7 +35,7 @@ Inside this view, the \<head> section contains metadata about the page, such as 
 
 The \<body> section contains the actual content rendered to the user: text, images, forms, and interactive elements. Since the DOM is fully exposed here (we will learn what that is later), anything loaded into the page, whether visible or hidden by CSS, can often be discovered or inspected. This makes this tool especially useful for analyzing how a webpage is built and where it might expose unintended information.
 
-In our case, we can open the \<body> section to find a very convenient comment that contains the password for the next level.
+In our case, we can open the \<div>s in the \<body> section to find a very convenient comment that contains the password for the next level. If you chose to select **View source code** directly, you can see it without any issues.
 
 
 ## EXTRA STEPS
@@ -77,4 +77,5 @@ For the remainder of this Natas series, you may want to learn how to use certain
 
 
 ## SUMMARY
-We have used basic SSH, `ls` and `cat` to retrieve a password from a file.
+We have used HTTP and `curl` to view the source code and retrieve the password.
+
