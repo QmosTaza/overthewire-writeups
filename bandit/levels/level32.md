@@ -54,6 +54,12 @@ Note how we have opened a Bash shell as user bandit33. This is because of the ac
 cat /etc/bandit_pass/bandit32
 ```
 
+And... we are done!! Congrats on solving all currently available!! I hope you enjoyed this series of writeups for Bandit. Please consider donating to the lovely people that created these levels so we can enjoy them for free:
+https://overthewire.org/information/donate.html
+
+Also consider star-ing this repository if you have enjoyed reading it :))
 
 ## SUMMARY
-We have learnt what `$0` is and how to use it to escape a restricted shell.
+We have learnt what `$0` is and how to use it to escape a restricted shell. 
+
+Like that, we have finished all Bandit levels :D
