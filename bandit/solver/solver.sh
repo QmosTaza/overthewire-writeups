@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=30
+MAX_LEVEL=31
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -339,6 +339,24 @@ solve_level_29(){
 	NEW=$(git log remotes/origin/dev | head -n 1 | awk '{print $2}')
 	PREV=$(git log remotes/origin/dev| head -n 7 | tail -n 1 | awk '{print $2}')
 	git diff "$NEW" "$PREV" | tail -n 3 | head -n 1 | cut -d ' ' -f 3
+	)
+}
+
+solve_level_30(){
+	(
+	LVL30_PASSWORD=$(get_password 30)
+	REPO_PATH="git_repos_private"
+	if [[ ! -d "$REPO_PATH" ]]; then
+			mkdir "$REPO_PATH"
+	fi
+	cd "$REPO_PATH"
+	if [[ ! -d "lvl30" ]]; then
+		GIT_SSH_COMMAND="sshpass -p '$LVL30_PASSWORD' ssh -o StrictHostKeyChecking=no -p 2220" \
+		git clone ssh://bandit30-git@bandit.labs.overthewire.org/home/bandit30-git/repo
+		mv repo/ lvl30/
+	fi
+	cd lvl30/.git
+	git show $(git tag)
 	)
 }
 
