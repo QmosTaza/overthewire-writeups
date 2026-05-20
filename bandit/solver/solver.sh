@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=31
+MAX_LEVEL=32
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -357,6 +357,34 @@ solve_level_30(){
 	fi
 	cd lvl30/.git
 	git show $(git tag)
+	)
+}
+
+solve_level_31(){
+	(
+	LVL31_PASSWORD=$(get_password 31)
+	REPO_PATH="git_repos_private"
+	if [[ ! -d "$REPO_PATH" ]]; then
+			mkdir "$REPO_PATH"
+	fi
+	cd "$REPO_PATH"
+	
+	rm -rf repo lvl31
+	GIT_SSH_COMMAND="sshpass -p '$LVL31_PASSWORD' ssh -o StrictHostKeyChecking=no -p 2220" \
+	git clone ssh://bandit31-git@bandit.labs.overthewire.org/home/bandit31-git/repo
+	
+	cd repo
+	echo "May I come in?" > key.txt
+	echo "" > .gitignore
+	git add .
+	git commit -m "Please give me the password ty xoxo" >/dev/null 2>&1
+	OUTPUT=$(
+		GIT_SSH_COMMAND="sshpass -p '$LVL31_PASSWORD' ssh -o StrictHostKeyChecking=no -p 2220" \
+		git push 2>&1 || true
+	)
+	echo "$OUTPUT" | grep -Eo '[A-Za-z0-9]{32}'
+	cd ..
+	mv repo/ lvl31/
 	)
 }
 
