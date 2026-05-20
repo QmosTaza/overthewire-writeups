@@ -3,7 +3,7 @@ import re
 import requests
 
 PASSWORD_FILE = "natas_passwords"
-MAX_LEVEL = 2
+MAX_LEVEL = 3
 
 
 # INIT PASSWORD FILE
@@ -58,26 +58,25 @@ def request(level, password, path=""):
     return requests.get(url, auth=(f"natas{level}", password))
 
 # LEVEL SOLVERS
-def solve_level_0(pw):
-    path = LEVELS[0]["path"]
-    r = request(0, pw, path)
-    match = re.search(r"[A-Za-z0-9]{32}", r.text)
-    return match.group(0) if match else None
-
-def solve_level_1(pw):
-    path = LEVELS[1]["path"]
-    r = request(1, pw, path)
+def solve_level_A(level, pw):
+    path = LEVELS[level]["path"]
+    r = request(level, pw, path)
     match = re.findall(r"[A-Za-z0-9]{32}", r.text)
     return match[-1] if match else None
 
+
 LEVELS = {
     0: {
-        "solver": solve_level_0,
+        "solver": solve_level_A,
         "path": "/"
     },
     1: {
-        "solver": solve_level_1,
+        "solver": solve_level_A,
         "path": "/"
+    },
+    2: {
+        "solver": solve_level_A,
+        "path": "/files/users.txt"
     }
 }
 
@@ -115,7 +114,7 @@ def main(target_level=1):
         solver = LEVELS[i]["solver"]
         
         print(f"Level {i} -> {next_level}")
-        password = solver(password)
+        password = solver(i, password)
 
         save_password(next_level, password)
         print(f"Password for level {next_level}: {password}")
