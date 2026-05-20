@@ -1,6 +1,6 @@
 # Bandit Solver
 
-Automated solver for the OverTheWire Bandit wargame (up to level 27).
+Automated solver for the OverTheWire Bandit wargame (up to level 33).
 
 It combines Bash scripting with Python (pexpect) for interactive challenges.
 

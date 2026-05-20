@@ -30,6 +30,13 @@ Read the specific `README.md` files for more information on the use of these sol
 
 This repo serves as both a learning resource and a quick reference while working through OverTheWire challenges. It’s intended to reinforce practical Linux, networking, and security concepts.
 
+## Work in Progress
+
+At the moment, this repository includes complete writeups for the Bandit wargame.
+I'm actively working on adding Natas, Leviathan, and Krypton! Writeups for those should be coming soon.
+
+Stay tuned, and feel free to check back as more content gets added. :))
+
 ## Disclaimer
 
 These writeups are for educational purposes only. Try to solve each level yourself before using the solutions.
