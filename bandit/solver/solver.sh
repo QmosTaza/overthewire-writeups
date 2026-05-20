@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #VARIABLES
-MAX_LEVEL=32
+MAX_LEVEL=33
 PASSWORD="bandit0"
 
 if ! [[ "$1" =~ ^[0-9]+$ ]]; then
@@ -42,7 +42,7 @@ remove_password() {
 }
 
 test_password() {
-	if [[ "$1" -eq 26 ]]; then
+	if [[ "$1" -eq 26 || "$1" -eq 32 ]]; then
         return 1
     fi
 	sshpass -p "$2" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=5 -p 2220 \
@@ -388,6 +388,11 @@ solve_level_31(){
 	)
 }
 
+solve_level_32(){
+	$0
+	cat /etc/bandit_pass/bandit33
+}
+
 #CACHE FUNCTION
 for ((i=$((SOLVE_UNTIL-1)); i > 0; i--)); do
 	echo "Testing caché for level $i"
@@ -421,6 +426,9 @@ for ((i=$RESUME; i<SOLVE_UNTIL; i++)); do
 		if [[ ! -f "sshkey_lvl26.private" ]]; then
 			retrieve_key_26
 		fi
+		PASSWORD=$(python3 $SOLVER)
+	elif [[ "$i" -eq 32 ]]; then
+		SOLVER="solver_$i.py"
 		PASSWORD=$(python3 $SOLVER)
 	else
 		PASSWORD=$(sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR -p 2220 \
