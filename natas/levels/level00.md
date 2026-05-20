@@ -25,9 +25,9 @@ We will be asked to enter the username and password for this level, in this case
 
 From here, we are not given too much information other than the password being "on this page". As you can probably imagine from reading the 'CONTEXT' section, you will have to open "Inspect Element" mode to retrieve the password.
 
-Press `Ctrl + Shift + C`
-or  
-Right-click the page and select **View source code** or **Inspect Element**
+Right-click the page and select **Inspect Element**
+or
+Right-click the page and select **View source code**
 
 When you open "Inspect Element", you will be first greeted with the "Inspection" tab, which shows the HTML document as the browser interprets it. This lets you view and modify the structure of the page in real time (note that only you can see what you modify).
 

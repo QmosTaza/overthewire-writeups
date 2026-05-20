@@ -18,7 +18,7 @@ http://natas1.natas.labs.overthewire.org
 
 After entering the username and password, we will find that this page restricts the use of the Right-click. This should not be much of a problem, since we can use the shortcuts we learned in the previous level:
 
-Press `Ctrl + Shift + C`  
+Press `Ctrl + Shift + C` to open Inspect Element
 or  
 Press `Ctrl + U` to view the source code
 
