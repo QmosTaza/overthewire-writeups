@@ -3,7 +3,7 @@ import re
 import requests
 
 PASSWORD_FILE = "natas_passwords"
-MAX_LEVEL = 3
+MAX_LEVEL = 4
 
 
 # INIT PASSWORD FILE
@@ -77,6 +77,10 @@ LEVELS = {
     2: {
         "solver": solve_level_A,
         "path": "/files/users.txt"
+    },
+    3: {
+        "solver": solve_level_A,
+        "path": "/s3cr3t/users.txt"
     }
 }
 
