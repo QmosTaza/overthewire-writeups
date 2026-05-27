@@ -34,7 +34,7 @@ By reading the code, we figure out that we are meant to "POST" a `secret` variab
 
 http://natas6.natas.labs.overthewire.org/includes/secret.inc
 
-From this file, we can the value that we are meant to input to the submition box. If we do so, the password for the next level will be shown to us in the main page.
+From this file, we can read the value that we are meant to input to the submition box. If we do so, the password for the next level will be shown to us in the main page.
 
 ## SUMMARY
 We have sent a specific input to the server to retrieve the password.

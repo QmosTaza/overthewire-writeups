@@ -3,7 +3,7 @@ import re
 import requests
 
 PASSWORD_FILE = "natas_passwords"
-MAX_LEVEL = 7
+MAX_LEVEL = 8
 
 
 # INIT PASSWORD FILE
@@ -143,6 +143,10 @@ LEVELS = {
         "path": "/",
         "method": "POST",
         "data_foo": get_level_6_data
+    },
+    7: {
+        "solver": solve_level_A,
+        "path": "/index.php?page=/etc/natas_webpass/natas8"
     }
 }
 
