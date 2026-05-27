@@ -3,7 +3,7 @@ import re
 import requests
 
 PASSWORD_FILE = "natas_passwords"
-MAX_LEVEL = 6
+MAX_LEVEL = 7
 
 
 # INIT PASSWORD FILE
@@ -53,12 +53,18 @@ def remove_password(level):
 
 
 # CORE REQUEST HELPERS
-def request(level, password, path="/", headers=None):
+def request(level, password, path="/", headers=None, data=None, method="GET"):
     if headers is None:
         headers = {}
+    if data is None:
+        data = {}
     
     url = f"http://natas{level}.natas.labs.overthewire.org{path}"
-    return requests.get(url, auth=(f"natas{level}", password), headers=headers)
+    
+    if method=="POST":
+        return requests.post(url, auth=(f"natas{level}", password), headers=headers, data=data)
+    else:
+        return requests.get(url, auth=(f"natas{level}", password), headers=headers, data=data)
 
 # LEVEL SOLVERS
 def solve_level_A(level, pw):
@@ -66,11 +72,40 @@ def solve_level_A(level, pw):
     
     path = config["path"]
     headers = config.get("headers", {})
+    method = config.get("method")
+    data = config.get("data", {})
     
-    r = request(level, pw, path, headers)
+    r = request(level, pw, path, headers, data, method)
     match = re.findall(r"[A-Za-z0-9]{32}", r.text)
     return match[-1] if match else None
 
+def solve_level_B(level,pw):
+    config = LEVELS[level]
+
+    path = config["path"]
+    headers = config.get("headers", {})
+    method = config.get("method")
+    data_foo = config.get("data_foo")
+    data = data_foo(pw) if data_foo else {}
+
+    r = request(level, pw, path, headers, data, method)
+    match = re.findall(r"[A-Za-z0-9]{32}", r.text)
+    return match[-1] if match else None
+
+# LEVEL AUXILIARY FUNCTIONS
+
+def get_level_6_data(password):
+    url = "http://natas6.natas.labs.overthewire.org/includes/secret.inc"
+    r = requests.get(url, auth=("natas6", password))
+    
+    match = re.search(r'"([^"]+)"', r.text)
+    secret = match.group(1)
+    return {
+        "secret": secret,
+        "submit": "Submit Query"
+    }
+    
+# LEVEL SPECIFIC DATA
 
 LEVELS = {
     0: {
@@ -102,9 +137,14 @@ LEVELS = {
         "headers": {
             "Cookie": "loggedin=1"
         }
+    },
+    6: {
+        "solver": solve_level_B,
+        "path": "/",
+        "method": "POST",
+        "data_foo": get_level_6_data
     }
 }
-
 
 # CACHE VALIDATION
 def test_password(level, pw, path):

@@ -33,4 +33,4 @@ http://natas2.natas.labs.overthewire.org/files/users.txt
 There, you should be able to find the password easily.
 
 ## SUMMARY
-We have used file navigtion to retrieve the password.
+We have used file navigation to retrieve the password.
