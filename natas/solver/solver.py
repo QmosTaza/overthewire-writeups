@@ -3,7 +3,7 @@ import re
 import requests
 
 PASSWORD_FILE = "natas_passwords"
-MAX_LEVEL = 5
+MAX_LEVEL = 6
 
 
 # INIT PASSWORD FILE
@@ -94,6 +94,13 @@ LEVELS = {
         "path": "/",
         "headers": {
             "Referer": "http://natas5.natas.labs.overthewire.org/"
+        }
+    },
+    5: {
+        "solver": solve_level_A,
+        "path": "/",
+        "headers": {
+            "Cookie": "loggedin=1"
         }
     }
 }

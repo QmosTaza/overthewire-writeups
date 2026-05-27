@@ -40,8 +40,6 @@ This header indicates the page from which the request originated. Some websites 
 
 Resending a request with this header changed may require that you install a browser extention. For this reason, we are going to solve this level directly from our terminal using `curl`. To change the 'referer' header we can simply add the option `--referer` to our command:
 
-We read the following text in said file:
-
 ```bash
 curl -u natas4:<password> --referer "http://natas5.natas.labs.overthewire.org/" http://natas4.natas.labs.overthewire.org
 ```
