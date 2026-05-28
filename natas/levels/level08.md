@@ -16,7 +16,7 @@ http://natas8.natas.labs.overthewire.org/
 
 After entering the username and password, we find an input box similar to level 6's. When we open the source code, we see the following:
 
-```
+```php
 <?
 
 $encodedSecret = "3d3d516343746d4d6d6c315669563362";
@@ -41,8 +41,8 @@ Note how the `encodeSecret` function encodes a given secret in base64, then reve
 
 We can retrieve the password by writing a `decodeSecret` function in PHP. You may use a PHP online compiler and run the followin code:
 
-```
-<?php
+```php
+<?
 $encodedSecret = "3d3d516343746d4d6d6c315669563362";
 
 function decodeSecret($secret) {

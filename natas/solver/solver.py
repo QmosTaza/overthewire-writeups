@@ -1,10 +1,12 @@
 import os
 import re
 import requests
-import base64 # for level 8
+import base64 # for level 8, etc.
+import json # for level 11, etc.
+from urllib.parse import unquote
 
 PASSWORD_FILE = "natas_passwords"
-MAX_LEVEL = 11
+MAX_LEVEL = 12
 
 
 # INIT PASSWORD FILE
@@ -54,18 +56,20 @@ def remove_password(level):
 
 
 # CORE REQUEST HELPERS
-def request(level, password, path="/", headers=None, data=None, method="GET"):
+def request(level, password, path="/", headers=None, data=None, method="GET", cookies=None):
     if headers is None:
         headers = {}
     if data is None:
+        data = {}
+    if cookies is None:
         data = {}
     
     url = f"http://natas{level}.natas.labs.overthewire.org{path}"
     
     if method=="POST":
-        return requests.post(url, auth=(f"natas{level}", password), headers=headers, data=data)
+        return requests.post(url, auth=(f"natas{level}", password), headers=headers, data=data, cookies=cookies)
     else:
-        return requests.get(url, auth=(f"natas{level}", password), headers=headers, data=data)
+        return requests.get(url, auth=(f"natas{level}", password), headers=headers, data=data, cookies=cookies)
 
 # LEVEL SOLVERS
 def solve_level_A(level, pw):
@@ -75,8 +79,11 @@ def solve_level_A(level, pw):
     headers = config.get("headers", {})
     method = config.get("method")
     data = config.get("data", {})
+    cookies = config.get("cookies", {})
+    if callable(cookies):
+        cookies = cookies(pw)
     
-    r = request(level, pw, path, headers, data, method)
+    r = request(level, pw, path, headers, data, method, cookies)
     match = re.findall(r"[A-Za-z0-9]{32}", r.text)
     return match[-1] if match else None
 
@@ -88,8 +95,11 @@ def solve_level_B(level,pw):
     method = config.get("method")
     data_foo = config.get("data_foo")
     data = data_foo(pw) if data_foo else {}
+    cookies = config.get("cookies", {})
+    if callable(cookies):
+        cookies = cookies(pw)
 
-    r = request(level, pw, path, headers, data, method)
+    r = request(level, pw, path, headers, data, method, cookies)
     match = re.findall(r"[A-Za-z0-9]{32}", r.text)
     return match[-1] if match else None
 
@@ -136,6 +146,45 @@ def get_level_10_data(password):
     return {
         "needle": ". /etc/natas_webpass/natas11 #",
         "submit": "Submit Query"
+    }
+    
+def xor_encrypt(text, key): # needed for level 11
+    out = ""
+
+    for i in range(len(text)):
+        out += chr(ord(text[i]) ^ ord(key[i % len(key)]))
+
+    return out
+    
+def get_level_11_data(password):
+    url = "http://natas11.natas.labs.overthewire.org/"
+    r = requests.get(url, auth=("natas11", password))
+    
+    data_cookie = r.cookies.get("data")
+    data_cookie = unquote(data_cookie)
+    ciphertext = base64.b64decode(data_cookie).decode("latin1")
+    known_plaintext = json.dumps({
+        "showpassword": "no",
+        "bgcolor": "#ffffff"
+    }, separators=(",", ":"))
+    
+    keystream = xor_encrypt(ciphertext,known_plaintext)
+    key = ""
+    for i in range(1,len(keystream)+1):
+        possible_key = keystream[:i]
+        if (possible_key * (len(keystream) // len(possible_key) + 1)) [:len(keystream)] == keystream:
+            key = possible_key
+            break
+        
+    forged_plaintext = json.dumps({
+        "showpassword": "yes",
+        "bgcolor": "#ffffff"
+    }, separators=(",", ":"))
+    forged_cipher = xor_encrypt(forged_plaintext,key)
+    forged_cookie = base64.b64encode(forged_cipher.encode("latin1")).decode()
+    
+    return {
+        "data": forged_cookie
     }
     
     
@@ -198,6 +247,11 @@ LEVELS = {
         "path": "/",
         "method": "POST",
         "data_foo": get_level_10_data
+    },
+    11: {
+        "solver": solve_level_A,
+        "path": "/",
+        "cookies": get_level_11_data
     }
 }
 

@@ -16,7 +16,7 @@ http://natas9.natas.labs.overthewire.org/
 
 After entering the username and password, we find a search bar. When we open the source code, we see the following:
 
-```
+```php
 Output:
 <pre>
 <?
