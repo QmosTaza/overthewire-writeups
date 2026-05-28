@@ -22,7 +22,7 @@ We are once again meant to search through the Developer Tools to find a way of c
 
 We can check the HTTP requests and responses received under the tabs `Console` and `Network`, like we did in the previous level.
 
-Both tabs show an HTTP request that has received an error response (404 Not Found). The header for the HTTP request contains a `Cookie` header which shows a variable 'loggedin=0'.
+Let's once again look into one of the HTTP requests. The header section of the HTTP request should contain a `Cookie` header which shows a variable 'loggedin=0'.
 
 This header contains all the relevant information from previous connections to a site, which is automatically sent back to the server whenever the browser makes a request to the same site in a short amount of time. 
 

@@ -21,16 +21,16 @@ include "includes/secret.inc";
     if(array_key_exists("submit", $_POST)) {
         if($secret == $_POST['secret']) {
         print "Access granted. The password for natas7 is <censored>";
-    } else {
-        print "Wrong secret";
-    }
+        } else {
+            print "Wrong secret";
+        }
     }
 ?>
 ```
 
-We can imagine that this code has been given to us in this way as to not reveal the password for natas, but still give us information on how to retrieve it. 
+You will not be able to see this if you view the source code directly (Ctrl + U). The code has been given to us this way as to not reveal the password for natas, but still give us information on how to retrieve it. 
 
-By reading the code, we figure out that we are meant to "POST" a `secret` variable with the value stored in `includes/secret.inc`. This file is easily accessible to us:
+By reading the code, we can tell that we are meant to "POST" a `secret` variable with the value stored in `includes/secret.inc`. This file is easily accessible to us:
 
 http://natas6.natas.labs.overthewire.org/includes/secret.inc
 

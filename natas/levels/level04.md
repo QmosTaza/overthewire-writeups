@@ -34,7 +34,9 @@ As you can probably tell from the 'CONTEXT' section, we are meant to search thro
 
 We can check the HTTP requests and responses received under the tabs `Console` and `Network`.
 
-Both tabs show an HTTP request that has received an error response (404 Not Found). The header for the HTTP response does not give us much information. However, the request we have made contains a `Referer` header which shows the URL "http://natas4.natas.labs.overthewire.org/index.php".
+Both tabs show a few HTTP requests, most of which have received a positive response (200 OK), except for one which has received an error (404 Not Found). Let's look into the first HTTP request, which processes the main page.
+
+The header for the HTTP response does not give us much information. However, the request we have made contains a `Referer` header which shows the URL "http://natas4.natas.labs.overthewire.org/index.php".
 
 This header indicates the page from which the request originated. Some websites use this value to restrict access or validate navigation flow, although it is not considered secure because the client can modify it manually.
 
